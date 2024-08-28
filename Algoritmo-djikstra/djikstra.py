@@ -39,6 +39,8 @@ distancias = {
     'TAI': {'PNE': 120, 'VID': 201, 'RDO': 16, 'PGE': 198}
 }
 
+
+
 naoVisitados = [
     'RSL',
     'AUR',
@@ -65,7 +67,7 @@ naoVisitados = [
 Métodos de decisão da origem e destino
 """
 
-"""
+
 origem = input('origem:')
 while origem not in nos:
     origem = input('origem: ')
@@ -74,21 +76,36 @@ destino = input('destino:')
 while destino not in nos:
     destino = input('destino: ')
 
-print(naoVisitados)
-naoVisitados.remove(origem)
-print(naoVisitados)
-"""
-"print(distancias[0])"
 
-origem = input('origem:')
+
 atual  = origem
 menorValor = 0
+total = 0
+prox_atual = 0
+caminho = []
 
-for i in distancias[atual]:
-    if menorValor == 0:
-        menorValor = distancias[atual].get(i)
-    elif menorValor > distancias[atual].get(i):
-        menorValor = distancias[atual].get(i)
 
-print(menorValor) 
-     
+while atual != destino:
+    for i in distancias[atual]:
+        print(i)
+        if menorValor == 0 and i in naoVisitados:
+            menorValor = distancias[atual].get(i)
+            prox_atual = i 
+            total += menorValor
+            naoVisitados.remove(i)
+            if i in naoVisitados:
+                naoVisitados.remove(atual)
+
+        elif menorValor > distancias[atual].get(i) and i in naoVisitados:
+            menorValor = distancias[atual].get(i)
+            prox_atual = i
+            total += menorValor
+            naoVisitados.remove(i)
+            if i in naoVisitados:
+                naoVisitados.remove(atual)
+    caminho.append(atual)
+    atual = prox_atual
+    menorValor = 0
+
+print(caminho)
+print(total)
